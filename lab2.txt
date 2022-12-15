@@ -1,0 +1,370 @@
+format compact
+% [Xinyu Meng]
+% [2567]
+% Section [C1]
+% Math 250 MATLAB Lab Assignment #1
+rand('seed', 2567)
+% Question 1 (a)
+A = rmat(3,5), rank(A(:,1:3))
+A =
+     7     6     4     5     4
+     7     8     1     3     7
+     0     4     1     4     2
+ans =
+     3
+rref(A)
+ans =
+    1.0000         0         0   -0.5510    0.3469
+         0    1.0000         0    0.7143    0.6429
+         0         0    1.0000    1.1429   -0.5714
+b = rvect(3), R = rref([A b])
+b =
+     2
+     8
+     1
+R =
+    1.0000         0         0   -0.5510    0.3469    0.6327
+         0    1.0000         0    0.7143    0.6429    0.6429
+         0         0    1.0000    1.1429   -0.5714   -1.5714
+S = R(:,1:5)
+S =
+    1.0000         0         0   -0.5510    0.3469
+         0    1.0000         0    0.7143    0.6429
+         0         0    1.0000    1.1429   -0.5714
+
+% (i) The first three columns are pivot columns.
+
+% (ii) The Rank of A and the Rank of R are both 3.
+
+% (iii) The nullity of A is 2 (5 - 3). X4 and X5 are the free
+% variables
+
+% (iv) Ax = b have a solution because there is no 0 rows that for which nonzero b 
+% would make system inconsistent, since the system is consistent, Ax = b should have either
+% infinite solutions or a unique solutions. 
+
+% Question 1 (b)
+c = R(:,6), x = [c;0;0]
+c =
+    0.6327
+    0.6429
+   -1.5714
+x =
+    0.6327
+    0.6429
+   -1.5714
+         0
+         0
+% (i) 
+A*x-b
+ans =
+   1.0e-14 *
+    0.0888
+    0.1776
+    0.0222
+S*x-c
+ans =
+     0
+     0
+     0
+% (ii) Ax = b, since we found x by taking the values for the basic 
+% variables using RREF(A)and setting x4 and x5 (the free variables) to
+% zero. The result is equal to c. Ax=b which also implies Ax - b = 
+% b - b = 0.  
+% Since S is RREF(A) and x has the same value (either it's Sx=C or 
+% Ax=b), so that, Sx-C will also equal 0.
+% This is due to the column correspondence principle. The equation Sx = C
+% is RREF(A) * X = C. Since Sx - c = c - c = 0, A*x - b = 0 also S*x - c = 0
+% is true.
+
+% Question 1 (c)
+u = [-S(:,4); 1; 0], v = [-S(:,5);0;1]
+u =
+    0.5510
+   -0.7143
+   -1.1429
+    1.0000
+         0
+v =
+   -0.3469
+   -0.6429
+    0.5714
+         0
+    1.0000
+% (i) Since Matrix A has 3 pivot columns, the general solution for 
+% x1, x2, x3, x4, x5 should be a general solution of the free variables
+% x4 and x5. General solution will be for Ax = 0, and it will be a 
+% combination of x4 multiply by a vector added to x5 multiply by 
+% another vector.
+% If Ax was equals to something other than 0, there may have been an 
+% additional vector in the general solution not multiplied by anything.
+% Otherwise, the vector v has x4 = 0 and the other vector 
+% (vector w) will have x5 = 0.
+
+S*u, A*u, S*v, A*v
+ans =
+     0
+     0
+     0
+ans =
+   1.0e-15 *
+         0
+   -0.4441
+         0
+ans =
+     0
+     0
+     0
+ans =
+   1.0e-15 *
+   -0.8882
+         0
+         0
+
+s = rand(1), t = rand(1), y = s*u + t*v
+s =
+    0.7650
+t =
+    0.0240
+y =
+    0.4132
+   -0.5619
+   -0.8606
+    0.7650
+    0.0240
+
+% (ii) A*y will equal 0  because of a combination of the two properties
+% of matrix and vector algebra. 
+% Firstly, A(su) = s(Au), thus A(tv) == t(Av). Au = 0 && 
+% Av = 0 which means that A(su) = 0 and A(tu) = 0. 
+% Moreover, Av + Au == A(u+v), so that A(su) + A(tv) = A((su) + (tv)) which 
+% means 0 + 0 = A((su) + (tv)). Also, y = su + tv which equals to 
+% Ay = 0.
+A*y
+ans =
+   1.0e-15 *
+   -0.4163
+   -0.2776
+   -0.2082
+
+% Question 1(d)
+z = x + y
+z =
+    1.0459
+    0.0810
+   -2.4320
+    0.7650
+    0.0240
+% If z = x + y then Az = A(x+y) = Ax + Ay, based on matrix-vector product
+% properties. Since Ax = b then Ax = Ax + Ay. 
+% As well, Ax + Ay = b + 0 = b.
+A*z-b
+ans =
+   1.0e-15 *
+   -0.4441
+         0
+    0.2220
+
+% Question 2
+u1 = rvect(3), u2 = rvect(3), u3 = rvect(3), u4 = rvect(3)
+u1 =
+     7
+     2
+     1
+u2 =
+     0
+     3
+     6
+u3 =
+     0
+     4
+     7
+u4 =
+     5
+     5
+     8
+
+
+% Question 2(a)
+A = [u1 u2 u3], rref(A)
+A =
+     7     0     0
+     2     3     4
+     1     6     7
+ans =
+     1     0     0
+     0     1     0
+     0     0     1
+
+% (i) The equation Ax = 0 have 0 variables.
+% (ii) The set S is linearly indepedent since there are 3 pivot columns and 3 columns
+% and the nullity is 0.
+
+% Question 2(b)
+B = [u1 u2 u3 u4], rref(B)
+B =
+     7     0     0     5
+     2     3     4     5
+     1     6     7     8
+ans =
+    1.0000         0         0    0.7143
+         0    1.0000         0    1.3810
+         0         0    1.0000   -0.1429
+
+% (i) Bx = 0 have one free variable.
+% (ii) The set T is linearly dependent since there are 4 columns but only 
+% 3 pivot columns so there's a free variable and there is a 
+% non-trivial solution for Bx = 0.
+
+% Question 2(c)
+v = rand(1)*u1 + rand(1)*u2
+v =
+    3.2150
+    1.2736
+    1.1694
+
+D = [u1 u2 v]
+D =
+    7.0000         0    3.2150
+    2.0000    3.0000    1.2736
+    1.0000    6.0000    1.1694
+
+rref(D)
+ans =
+    1.0000         0    0.4593
+         0    1.0000    0.1184
+         0         0         0
+
+% The set U is linearly dependent because v is a linear combination of both
+% u1 and u2 so there exists a c1u1 + c2u2 +c3u3 = 0 
+% other than c1 = 0, c2 = 0, c3 = 0.
+
+% Question 3
+A = rmat(2,3), B = rmat(3, 4), C = rmat(4,3), v = rvect(4)
+A =
+     1     7     0
+     0     1     7
+B =
+     7     3     6     2
+     9     2     1     8
+     6     1     1     9
+C =
+     6     2     4
+     1     8     8
+     7     3     1
+     8     3     8
+v =
+     3
+     4
+     0
+     4
+
+
+% Question 3(a)
+u = B*v, A*u, D = A*B, D*v
+u =
+    41
+    67
+    58
+ans =
+   510
+   473
+D =
+    70    17    13    58
+    51     9     8    71
+ans =
+   510
+   473
+A*(B*C)
+ans =
+   992   489   893
+   939   411   852
+(A*B)*C
+ans =
+   992   489   893
+   939   411   852
+Which shows that A(BC) = (AB)C
+
+% Question 3(b) - Matrices Are Not Numbers
+A = [0 1; 0 0], B = [0 0; 1 0], C = [0 1; 1 0]
+A =
+     0     1
+     0     0
+B =
+     0     0
+     1     0
+C =
+     0     1
+     1     0
+
+% (i) AB and BA are not equal.  
+A*B, B*A
+ans =
+     1     0
+     0     0
+ans =
+     0     0
+     0     1
+
+% ii) A^2 and what it says about the value of A. Shown below. 
+A*A
+ans =
+     0     0
+     0     0
+
+% If A were a number instead of a matrix A^2, this would show us 
+% the value of A multiplied by the value of A, which is not the same 
+% conclusion made for matrices. 
+% In conclusion, A^2 is not equal to the values of the matrix multiplied by themselves. 
+
+% iii) 
+A*C
+ans =
+     1     0
+     0     0
+
+A*B
+ans =
+     1     0
+     0     0
+
+% If A, B, and C were numbers with A != 0, then that is enough 
+% information to conclude  that if A * B = A * C, then B = C.
+% For example if A = 8, B = 2, C = 2. 
+% A * B = 16, A * C = 16. 16 / A can only result in the value for B and C, which 
+% shows that B == C
+% However for matrices, this is not enough to conclude that B = C. 
+
+% Question 4
+A = [0,0,0,1,0,1;1,0,1,1,0,0;0,1,0,1,0,0;1,0,1,0,0,0;1,1,1,0,0,1;0,0,1,1,0,0]
+
+A =
+
+     0     0     0     1     0     1
+     1     0     1     1     0     0
+     0     1     0     1     0     0
+     1     0     1     0     0     0
+     1     1     1     0     0     1
+     0     0     1     1     0     0
+% (i) Picture is attached.
+
+% (ii) According to the graph, Person 1 does not have a line 
+% coming from Person 3 or Person 6. This tells us that Person 1
+% cannot receive a message in only one step from Person 3 or Person 6.
+% In the graph, there isn't a arrow coming from vertex 3 and 6.
+% We can use this same reasoning for every other edge in the graph from
+% every person.
+
+% (iii) Different levels of transitivity can be determined
+% by the corresponding entry in the matrix. Entry
+% (1,4) of the matrix will correlate to how many ways messages can be 
+% sent. For example, in Matrix A, the entry at (1,4) is 7. This means
+% that Person 1 can send a message to Person 4 in 
+% seven ways in four stages.
+
+% (iv)In order to calculate the number of ways Person 3 can send a message to 
+% Person 4 in at most 4 stages, we need to find the 
+% (3,4) entry of matrix A + A^2 + A^3 + A^4.
+% From this, it is clear that the (3,4) entry is 12. This means
+% we can assume that there are 12 ways that Person 3 can send a message
+% to Person 4 in at most 4 stages. diary lab3.txt

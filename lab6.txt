@@ -1,0 +1,327 @@
+format compact
+diary off
+
+% section [C1]
+% Math 250 MATLAB Assignment #6
+format compact
+rand('seed', 2567)
+
+% Question 1(a)
+
+u = rvect(2), v = rvect(2)
+u =
+     6
+     0
+v =
+     4
+     9
+
+rank([u, v])
+ans =
+     2
+Based on the triangular inequality, ||u+v|| <= ||u|| +||v||.
+As calculated, ||u+v|| = 13.4536 , and ||u|| + ||v|| = 15.8489, thus, ||u+v||
+is smaller than ||u|| + ||v||
+norm(u)
+ans =
+     6
+norm(v)
+ans =
+    9.8489
+norm(u+v)
+ans =
+   13.4536
+norm(u) + norm(v)
+ans =
+   15.8489
+
+% Question 1(b)
+
+Based on the Cauchy-Schwarz inequality, |u*v| <= ||u|| * ||v||, which means
+that the absolute value of the dot product of 2 vectors, which is u and v, 
+is less than or equal to the dot product of the norm of the vectors.
+As the calculated result, |u*v| = 24 while ||u|| * ||v|| = 59.0931, which
+is greater than |u*v|.
+
+abs(u'*v)
+ans =
+    24
+norm(u)*norm(v)
+ans =
+   59.0931
+
+% Question 1(c)
+
+w=((u'*v)/(v'*v))*v
+w =
+    0.9897
+    2.2268
+
+z=u-w
+z =
+    5.0103
+   -2.2268
+
+z'*v
+ans =
+     0
+
+Since z . v = 0, they are orthogonal to each other.
+
+% Question 1(d)
+
+ P = v*inv(v'*v)*v'
+P =
+    0.1649    0.3711
+    0.3711    0.8351
+P is a 2x2 matrix because P is the product of v times transposed itself and
+a constant. Since v is a 2x1, the product of v and its transposed is 
+2x1 * 1x2, which will be a 2x2 matrix.
+
+P*u
+ans =
+    0.9897
+    2.2268
+
+w
+w =
+    0.9897
+    2.2268
+P*u = w
+
+% Question 2(a)
+
+u1 = rvect(3), u2 = rvect(3), u3 = rvect(3)
+u1 =
+     2
+     6
+     6
+u2 =
+     4
+     8
+     3
+u3 =
+     2
+     9
+     0
+
+rank([u1, u2, u3])
+ans =
+     3
+
+r = 0:0.05:1; hold on
+plot3(r*u1(1),r*u1(2),r*u1(3), 'r:')
+plot3(r*u2(1),r*u2(2),r*u2(3), 'g:')
+plot3(r*u3(1),r*u3(2),r*u3(3), 'b:')
+rotate3d on
+No they are not orthogonal because they are not perpendicular to each other visually.
+
+% Question 2(b)
+v1 = u1
+v1 =
+     2
+     6
+     6
+
+P1= v1*inv(v1'*v1)*v1', v2=u2-P1*u2
+P1 =
+    0.0526    0.1579    0.1579
+    0.1579    0.4737    0.4737
+    0.1579    0.4737    0.4737
+v2 =
+    2.0526
+    2.1579
+   -2.8421
+
+v1'*v2
+ans =
+   1.1546e-14
+
+v1 and v2 are orthogonal to each other.
+
+v3'*v2
+ans =
+  -9.7700e-15
+
+v3'*v1
+ans =
+  -1.2434e-14
+v3 is orthogonal to v2 and v1
+
+% Question 2(c)
+
+w1 = v1/norm(v1), w2 = v2/norm(v2), w3 = v3/norm(v3)
+w1 =
+    0.2294
+    0.6882
+    0.6882
+w2 =
+    0.4986
+    0.5242
+   -0.6904
+w3 =
+   -0.8359
+    0.5016
+   -0.2229
+
+Q = [w1, w2, w3]
+Q =
+    0.2294    0.4986   -0.8359
+    0.6882    0.5242    0.5016
+    0.6882   -0.6904   -0.2229
+
+(i) It's known that Q is made up by the orthonormal vectors w1,w2, and w3, which 
+means that if three vectors in Q are orthogonal to each other, then they are 
+all unit vectors. Thus, the norm of three vectors is 1. Moreover, since Q^T*Q
+is the dot product of the rows of Q^T, so that wi can represent the rows of Q^T, 
+and wj can represent the columns of Q. However, since Q is orthonormal, the dot
+product between the other vectors in the matrix are 0, but the dot product of
+itself is 1, which is the identity matrix. Thus, Q*Q^T is the identity matrix. 
+(ii) Q^-1 is equals to Q^T because for the orthogonal matrix Q, by the property, 
+its inverse is its transpose. That, Q^-1 = Q^T.
+
+transpose(Q)*Q
+ans =
+    1.0000    0.0000   -0.0000
+    0.0000    1.0000   -0.0000
+   -0.0000   -0.0000    1.0000
+
+inv(Q)
+ans =
+    0.2294    0.6882    0.6882
+    0.4986    0.5242   -0.6904
+   -0.8359    0.5016   -0.2229
+
+% Question 2(d)
+
+A = [u1, u2, u3], R = Q'*A
+A =
+     2     4     2
+     6     8     9
+     6     3     0
+R =
+    8.7178    8.4884    6.6531
+    0.0000    4.1167    5.7148
+   -0.0000   -0.0000    2.8421
+
+Q*R
+ans =
+    2.0000    4.0000    2.0000
+    6.0000    8.0000    9.0000
+    6.0000    3.0000   -0.0000
+
+(iii) Since R is an upper triangular matrix, so that R21, R31, R32 are all 0, 
+each one of the entries is the product of the corresponding column of A and
+the orthonormal column of Q. Since w1 . w2 = 0, which is the second orthonormal
+column of Q and the first column of A. Thus, R21 also should be 0. This is 
+also true for r31 and r32.
+
+% Question 3(a)
+
+a1 = rvect(5); a2 = rvect(5); a3 = rvect(5); A = [a1, a2, a3]
+A =
+     6     6     0
+     6     5     6
+     6     2     8
+     9     7     4
+     8     7     4
+
+rank(A)
+ans =
+     3
+
+
+Q = grams(A); w1 = Q(:,1), w2 = Q(:,2), w3 = Q(:,3)
+w1 =
+    0.3772
+    0.3772
+    0.3772
+    0.5658
+    0.5030
+w2 =
+    0.4285
+    0.1059
+   -0.8622
+   -0.0026
+    0.2487
+w3 =
+   -0.3750
+    0.8247
+   -0.0432
+   -0.3966
+    0.1413
+
+Q'*Q
+ans =
+    1.0000    0.0000    0.0000
+    0.0000    1.0000    0.0000
+    0.0000    0.0000    1.0000
+
+% My answer shows that {w1,w2,w3} is an orthonormal set of vectors beceause
+the result is the identity matrix. Say K = Q'*Q, K11 = Q11*Q11  + Q11*Q21
+ + Q11*Q31 + Q11*Q41 + Q11*Q51 = 1 + 0 + 0 + 0 + 0 = 1, the same applies to K22 and K33.
+
+% Question 3(b)
+
+P = w1*w1' + w2*w2' + w3*w3'
+P =
+    0.4666   -0.1216   -0.2110    0.3611    0.2433
+   -0.1216    0.8337    0.0154   -0.1139    0.3326
+   -0.2110    0.0154    0.8875    0.2328   -0.0308
+    0.3611   -0.1139    0.2328    0.4775    0.2279
+    0.2433    0.3326   -0.0308    0.2279    0.3348
+
+v = rvect(5)
+v =
+     1
+     1
+     5
+     3
+     4
+
+w = P*v, z = v-w
+w =
+    1.3466
+    1.7776
+    4.8169
+    3.7550
+    2.4448
+z =
+   -0.3466
+   -0.7776
+    0.1831
+   -0.7550
+    1.5552
+
+P*w
+ans =
+    1.3466
+    1.7776
+    4.8169
+    3.7550
+    2.4448
+
+P*z
+ans =
+   1.0e-14 *
+    0.0722
+   -0.1998
+    0.1860
+    0.1665
+   -0.0222
+
+The result satisfies that P*w = w, and P*z = 0.
+
+% Question 3(c)
+PW = A*inv(A'*A)*A'
+PW =
+    0.4666   -0.1216   -0.2110    0.3611    0.2433
+   -0.1216    0.8337    0.0154   -0.1139    0.3326
+   -0.2110    0.0154    0.8875    0.2328   -0.0308
+    0.3611   -0.1139    0.2328    0.4775    0.2279
+    0.2433    0.3326   -0.0308    0.2279    0.3348
+
+norm(PW-P)
+ans =
+   1.1608e-14
+||PW-P|| is roughly equals to 0.
